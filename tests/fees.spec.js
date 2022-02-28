@@ -1,27 +1,22 @@
 const request = require('supertest');
-const app = require('../app');
-const redisClient = require('../utils/redis');
+const app = require('../src/app');
+const dbClient = require('../src/db').client;
 
 const invalidFCS = 'LNPY1221 NGN * *(*) : APPLY PERC';
 const validFCS =
   'LNPY1221 NGN * *(*) : APPLY PERC 1.4\nLNPY1222 NGN INTL CREDIT-CARD(VISA) : APPLY PERC 5.0';
 
 beforeEach(async () => {
-  await redisClient.del('fees');
+  await dbClient.query('TRUNCATE TABLE fees');
 });
 
 afterAll(async () => {
-  await redisClient.quit();
+  await dbClient.close();
 });
 
 describe('App', () => {
-  it('should respond with the correct status code', async () => {
-    const response = await request(app).get('/');
-    expect(response.statusCode).toBe(200);
-  });
-
   it('It should return 404 for invalid routes', async () => {
-    const response = await request(app).get('/invalid-route');
+    const response = await request(app).get('/');
     expect(response.statusCode).toBe(404);
   });
 });
