@@ -1,0 +1,30 @@
+{
+  "name": "lannister-pay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "prestart": "npm run migrate:up",
+    "migrate:up": "sequelize-cli db:migrate",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.3",
+    "sequelize": "^6.17.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "jest": "^27.5.1",
+    "sequelize-cli": "^6.4.1",
+    "supertest": "^6.2.2"
+  }
+}
